@@ -1,0 +1,21 @@
+version: "3"
+services:
+
+# https://stackoverflow.com/questions/43654656/dockerfile-if-else-condition-with-external-arguments
+
+  verdaccio:
+    image: verdaccio/verdaccio
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      networks: 
+        - cache_net
+      logging:
+        driver: syslog
+        options:
+          - syslog-address: "tcp://127.0.0.1:601"
+
+
+networks: 
+  cache_net:

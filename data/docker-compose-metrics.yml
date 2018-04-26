@@ -1,0 +1,23 @@
+version: "3"
+services:
+
+  prometheus:
+    image: prom/prometheus
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "9090:9090"
+    networks:
+      - demo_webnet
+    volumes:
+      - /vagrant/data/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    # logging:
+    #   driver: syslog
+    #   options:
+    #     syslog-address: "tcp://127.0.0.1:601"
+
+networks:
+  demo_webnet:
+    external: true

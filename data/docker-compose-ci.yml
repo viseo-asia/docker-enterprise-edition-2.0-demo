@@ -1,0 +1,71 @@
+version: "3.1"
+services:
+
+  jenkins:
+    image: local.dtr/viseo/jenkins-docker
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8080:8080"
+      # - "50000:50000"
+    networks:
+      - cinet
+    extra_hosts:
+      - "local.dtr:192.168.88.10"
+    volumes:
+      - /vagrant/data/jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://127.0.0.1:601"
+
+  postgres:
+    image: postgres:10.3-alpine
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks: 
+      - cinet
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar 
+      - PGDATA=/var/lib/postgresql/data/db
+    volumes:
+      # Maintain pg data between restarts. Vagrant/Virtualbox permissions making sharing a volume difficult for pgsql initdb (permission errors)
+      - pg-data:/var/lib/postgresql/data
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://127.0.0.1:601"
+
+  sonarqube:
+    image: sonarqube:lts-alpine
+    depends_on:
+      - postgres
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    # environment:
+    #   - SONARQUBE_JDBC_USERNAME=sonar
+    #   - SONARQUBE_JDBC_PASSWORD=sonar
+    #   - SONARQUBE_JDBC_URL=jdbc:postgresql://postgres/sonar 
+    ports:
+      - "9000:9000"
+      # - "9092:9092"
+    networks: 
+      - cinet
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://127.0.0.1:601"
+
+networks:
+  cinet:
+
+volumes:
+  pg-data:

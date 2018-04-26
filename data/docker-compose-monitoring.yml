@@ -1,0 +1,59 @@
+version: "3"
+services:
+
+  influxdb:
+    image: influxdb:1.4.2-alpine
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8086:8086"
+    networks:
+      - monitoring_net
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://127.0.0.1:601"
+
+  chronograf:
+    image: chronograf:1.3.10-alpine
+    depends_on:
+      - influxdb
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8888:8888"
+    networks: 
+      - monitoring_net
+    # volumes:
+    command: ["--influxdb-url=http://influxdb:8086"]
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://127.0.0.1:601"
+
+  telegraf:
+    image: telegraf:1.5.0-alpine
+    depends_on:
+      - influxdb
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8125:8125/udp"
+    networks:
+      - monitoring_net
+    volumes:
+      - "/vagrant/data/tick/telegraf.conf:/etc/telegraf/telegraf.conf"
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://127.0.0.1:601"
+    
+
+networks:
+  monitoring_net:

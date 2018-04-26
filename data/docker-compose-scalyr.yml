@@ -1,0 +1,19 @@
+version: "3"
+services:
+
+  scalyr:
+    image:  scalyr/scalyr-docker-agent
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "601:601"
+    networks: 
+      - scalyr_net
+    volumes:
+      - /home/vagrant/scalyr_api_key.json:/etc/scalyr-agent-2/agent.d/api_key.json
+      - /var/run/docker.sock:/var/scalyr/docker.sock
+
+networks: 
+  scalyr_net:

@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+
+  neo4j:
+    image: local.dtr/rudijs/neo4j:2.3
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "7474:7474"
+    networks:
+      - dbnet
+
+networks:
+  dbnet:

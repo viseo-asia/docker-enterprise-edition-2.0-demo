@@ -21,7 +21,7 @@ Build a custom Jenkins image that can use the host Docker engine to build images
 
 9. Open Jenkins admin: [http://192.168.88.10:8080](http://192.168.88.10:8080)
 10. Follow the setup instructions, open a console in the Jenkins container and get the initial admin password:
-11. `cat jenkins_home/secrets/initialAdminPassword`
+11. `cat /var/jenkins_home/secrets/initialAdminPassword`
 12. Follow the Jenkins Install Wizard: **Install Suggested Plugins**
 13. This will take a few minutes to install default suggested plugins
 

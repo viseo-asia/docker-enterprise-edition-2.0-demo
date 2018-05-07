@@ -2,7 +2,7 @@
 
 The CI/CD process will include a Code Quality Gate: [Sonarqube](https://www.sonarqube.org/)
 
-## Configure SonarQube
+## Initial Configure SonarQube
 
 By default you can login as `admin` with password `admin` at [http://192.168.88.10:9000/](http://192.168.88.10:9000/)
 
@@ -26,26 +26,6 @@ Click continue, then skip tutorial, should be at an empty dashboard.
 
 ![Sonarqube](images/sonarqube-dashboard.png)
 
-**Add a web-hook for Jenkins**
-
-Configure a webhook in your SonarQube server pointing to `http://jenkins:8080/sonarqube-webhook/` (The trailing slash is mandatory)
-
-Click >> Administration >> Webhooks
-
-![Sonar](images/sonarqube-config-3.png)
-
-**Add a Quality Gate rule that we can use to toggle Pass or Fail when building**
-
-Note the first rule **Coverage** is the one we add. 
-
-We can change the Error value to higher or lower than 10, for example, to make the Quality Gate Pass or Fail.
-
-![Sonar](images/sonarqube-config-4.png)
-
-Sonarqube is very powerful, this is just out of the box defaults.
-
-Explore it more at the Docs [https://docs.sonarqube.org/](https://docs.sonarqube.org/)
-
 ## Configure Jenkins
 
 **Add the Sonarqube Plugin**
@@ -66,5 +46,43 @@ Jenkins > Manage Jenkins > Global Tool Configuration >
 
 ![Sonar](images/sonarqube-config-2.png)
 
+## Complete SonarQube Configuration
 
+**Add a web-hook for Jenkins**
+
+Configure a webhook in your SonarQube server pointing to `http://jenkins:8080/sonarqube-webhook/` (The trailing slash is mandatory)
+
+Click >> Administration >> Webhooks
+
+![Sonar](images/sonarqube-config-3.png)
+
+**Install and/or Update required Plugins**
+
+Open up the plugins page at [http://192.168.88.10:9000/admin/marketplace](http://192.168.88.10:9000/admin/marketplace)
+
+You should see you're using the *Community Edition*
+
+Install or Upgrade the plugins:
+
+
+1. SonarJS
+2. Git
+
+Don't forget to click *restart* at the top of the plugins page.
+
+It's also useful to click through on reports, so add *sonarqube* to /etc/hosts on your laptop (host machine)
+
+![Sonarqube /etc/hosts](images/sonarqube-hosts.png)
+
+**Add a Quality Gate rule that we can use to toggle Pass or Fail when building**
+
+Note the rule **Line Coverage** is the one we add. 
+
+We can change the Error value to higher or lower than 75, for example, to make the Quality Gate Pass or Fail.
+
+![Sonar](images/sonarqube-line-coverage-rule.png)
+
+Sonarqube is very powerful, this is just out of the box defaults.
+
+Explore it more at the Docs [https://docs.sonarqube.org/](https://docs.sonarqube.org/)
 

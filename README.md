@@ -1,10 +1,10 @@
 #  Docker Enterprise Edition v2 Demo and DevOps Showcase
 
-This installation guide last updated at: **2018-05-02**
+This installation guide last updated at: **2018-12-13**
 
-Ubuntu Version: **16.04**
+Ubuntu Version: **18.04**
 
-Docker Enterprise Edition Version: **17.06.2-ee-10**
+Docker Enterprise Edition Version: **18.09**
 
 ## Overview
 

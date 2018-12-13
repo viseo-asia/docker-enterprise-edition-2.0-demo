@@ -18,7 +18,7 @@ curl -fsSL $DOCKER_EE_URL/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository \
    "deb [arch=amd64] $DOCKER_EE_URL/ubuntu \
    $(lsb_release -cs) \
-   stable-17.06"
+   stable-18.09"
 
 sudo apt-get update
 

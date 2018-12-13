@@ -20,7 +20,7 @@
 ```
 docker container run --rm -it --name ucp \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  docker/ucp:3.0.0 install \
+  docker/ucp:3.1.0 install \
   --host-address 192.168.88.10 \
   --admin-username admin \
   --admin-password password

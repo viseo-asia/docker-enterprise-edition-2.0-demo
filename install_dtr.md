@@ -9,7 +9,7 @@ So we'll change the UCP UI to use port 444 and allow the DTR to use port 443.
 2. Click *Save*
 3. Open [https://192.168.88.10:444/login/](https://192.168.88.10:444/login/)
 4. Open [https://192.168.88.10:444/manage/settings/dtr](https://192.168.88.10:444/manage/settings/dtr)
-  - Select the *UCP NODE* *ubuntu xenial*
+  - Select the *UCP NODE* *ubuntu bionic*
   - Check *Disable TLS verification for UCP*
   - Copy to Clipboard
   - Execute
@@ -19,7 +19,7 @@ Example:
 
 ```
 docker run -it --rm docker/dtr install \
---ucp-node ubuntu-xenial  \
+--ucp-node ubuntu-bionic  \
 --ucp-username admin  \
 --ucp-password password \
 --ucp-url https://192.168.88.10:444  \
